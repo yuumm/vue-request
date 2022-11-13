@@ -1,22 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Login from '../components/Login.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
+  // 重定向，当访问/的时候，自动跳转到登录页面
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/login',
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    // path代表用户访问的路径
+    path: '/login',
+    // component表示当用户访问/login的时候从component获取哪个组建传递到app.vue组件中
+    component: Login
   }
 ]
 
