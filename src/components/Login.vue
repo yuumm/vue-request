@@ -67,17 +67,20 @@ export default {
             this.$refs.loginFormRes.validate(async valide => {
                 if (!valide) return;
                 // const result = await loginApi(this.loginForm);
-                const result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
-                // 还有localstorage没有写
+                let result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
                 console.log(result);
-                // await this.$axios.post('http://localhost:9999', {
-                //     data: this.loginForm
-                // }).then(resp => {
-                //     console.log(resp);
-                // }).catch(err => {
-                //     console.log(err);
-                // })
-                // console.log(res);
+                if (String(result.data.code) == '1') {
+                    console.log(result.code);
+                    console.log(result.data.code);
+                    // localStorage表示将数据保存在浏览器本地，
+                    // JSON.stringify(res.data)表示将数据转换为json格式
+                    localStorage.setItem('userInfo', JSON.stringify(result.data))
+                    this.$message({ showClose: true, message: '登录成功', type: 'success' });
+                    this.$router.push('/home')
+                    // window.location.href = '/backend/index.html'
+                } else {
+                    this.$message({ showClose: true, message: result.data.msg, type: 'error' });
+                }
             })
         }
     }
