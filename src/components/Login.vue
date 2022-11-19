@@ -72,6 +72,7 @@ export default {
                 if (String(result.data.code) == '1') {
                     console.log(result.code);
                     console.log(result.data.code);
+                    console.log(this.loginForm);
                     // localStorage表示将数据保存在浏览器本地，
                     // JSON.stringify(res.data)表示将数据转换为json格式
                     localStorage.setItem('userInfo', JSON.stringify(result.data))

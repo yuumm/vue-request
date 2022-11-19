@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
+import Welcome from '../components/Welcome.vue'
 
 Vue.use(VueRouter)
 
@@ -18,8 +19,16 @@ const routes = [
     component: Login
   },
   {
-    path: '/Home',
-    component: Home
+    path: '/home',
+    component: Home,
+    // redirect表示当访问home的时候，就重定向到welcome中
+    redirect: '/welcome',
+    // children 表示在home路由下的页面中间要显示Welcome路由中的内容
+    // 例如在侧边栏的旁边显示不同的内容，就可以将要显示的内容写到子路径中，然后可以显示
+    children: [{
+      path: '/welcome',
+      component: Welcome,
+    }]
   }
 ]
 

@@ -11,7 +11,14 @@ import './assets/css/global.css'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 // 配置请求根路径
-// axios.defaults.baseURL = 
+// axios.defaults.baseURL =
+// 设置请求拦截器，request表示请求拦截器，use表示挂载请求函数
+axios.interceptors.request.use(config => {
+  console.log(config)
+  config.headers.Authorization = localStorage.getItem("userinfo")
+  // 最后必须return config，否则会报错
+  return config;
+})
 Vue.prototype.$axios = axios
 
 
