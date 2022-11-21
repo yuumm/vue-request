@@ -17,7 +17,7 @@
                 <div class="toggle-button" @click="toggleCollapse">|||</div>
                 <!-- collapse-transition表示关闭折叠动画 -->
                 <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse"
-                    :collapse-transition="false" router>
+                    :collapse-transition="false" router :default-active="activePath">
                     <el-submenu index="1">
                         <template slot="title">
                             <i class="el-icon-menu"></i>
@@ -25,11 +25,16 @@
                         </template>
                         <el-menu-item-group>
                             <!-- <template slot="title">分组一</template> -->
-                            <el-menu-item index="centerAllRequest">所有需求</el-menu-item>
-                            <el-menu-item index="centerLeftRequest">待领取需求</el-menu-item>
-                            <el-menu-item index="centerGetRequest">已领取需求</el-menu-item>
-                            <el-menu-item index="centerUnfinishRequest">未完成需求</el-menu-item>
-                            <el-menu-item index="centerFinishRequest">已完成需求</el-menu-item>
+                            <el-menu-item index="centerAllRequest" @click="saveNavState('centerAllRequest')">所有需求
+                            </el-menu-item>
+                            <el-menu-item index="centerLeftRequest" @click="saveNavState('centerLeftRequest')">待领取需求
+                            </el-menu-item>
+                            <el-menu-item index="centerGetRequest" @click="saveNavState('centerGetRequest')">已领取需求
+                            </el-menu-item>
+                            <el-menu-item index="centerUnfinishRequest" @click="saveNavState('centerUnfinishRequest')">
+                                未完成需求</el-menu-item>
+                            <el-menu-item index="centerFinishRequest" @click="saveNavState('centerFinishRequest')">已完成需求
+                            </el-menu-item>
                         </el-menu-item-group>
                         <!-- 二级菜单 -->
                         <!-- <el-submenu index="1-4">
@@ -44,10 +49,15 @@
                         </template>
                         <el-menu-item-group>
                             <!-- <template slot="title">分组一</template> -->
-                            <el-menu-item index="personAllRequest">所有需求</el-menu-item>
-                            <el-menu-item index="personUnfinishRequest">待完成需求</el-menu-item>
-                            <el-menu-item index="personFinishRequest">已完成需求</el-menu-item>
-                            <el-menu-item index="personSubmitRequest">提交的需求</el-menu-item>
+                            <el-menu-item index="personAllRequest" @click="saveNavState('personAllRequest')">所有需求
+                            </el-menu-item>
+                            <el-menu-item index="personUnfinishRequest" @click="saveNavState('personUnfinishRequest')">
+                                待完成需求
+                            </el-menu-item>
+                            <el-menu-item index="personFinishRequest" @click="saveNavState('personFinishRequest')">已完成需求
+                            </el-menu-item>
+                            <el-menu-item index="personSubmitRequest" @click="saveNavState('personSubmitRequest')">提交的需求
+                            </el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -66,12 +76,15 @@ export default {
     data() {
         return {
             // 点击侧边栏折叠
-            isCollapse: false
+            isCollapse: false,
+            // 被激活的链接地址
+            activePath: ''
         }
     },
     methods: {
         created() {
             this.getMenuList();
+            this.activePath = window.sessionStorage.getItem("activePath");
         },
         logout() {
             // 清空localstorage
@@ -81,6 +94,11 @@ export default {
         // 点击按钮，切换菜单的折叠与展开
         toggleCollapse() {
             this.isCollapse = !this.isCollapse;
+        },
+        // 保存链接的激活状态，主要作用是侧边栏被选中时，对应的地方要高亮
+        saveNavState(activePath) {
+            window.sessionStorage.setItem('activePath', activePath);
+            this.activePath = window.sessionStorage.getItem("activePath");
         }
     }
 }

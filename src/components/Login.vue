@@ -14,15 +14,17 @@
                 <!-- 用户名 -->
                 <el-form-item prop="username">
                     <!-- prefix-icon在输入框前面添加图标 -->
-                    <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
+                    <el-input v-model="loginForm.username" prefix-icon="el-icon-user" placeholder="请输入工号"></el-input>
                 </el-form-item>
                 <!-- 密码 -->
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"></el-input>
+                    <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"
+                        placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <!-- 按钮 -->
                 <el-form-item class="btns">
                     <el-button type="primary" @click="login">登录</el-button>
+                    <el-button type="primary" @click="register">注册</el-button>
                     <el-button type="info" @click="resetLoginForm">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -45,7 +47,7 @@ export default {
             loginFormRules: {
                 // 验证用户名是否合法
                 username: [
-                    { required: true, message: '请输入账号', trigger: 'blur' }
+                    { required: true, message: '请输入工号', trigger: 'blur' }
                 ],
                 // 验证密码是否合法
                 password: [
@@ -75,7 +77,8 @@ export default {
                     console.log(this.loginForm);
                     // localStorage表示将数据保存在浏览器本地，
                     // JSON.stringify(res.data)表示将数据转换为json格式
-                    localStorage.setItem('userInfo', JSON.stringify(result.data))
+                    window.sessionStorage.setItem('user', JSON.stringify(result.data.data.id))
+                    // localStorage.setItem('userInfo', JSON.stringify(result.data))
                     this.$message({ showClose: true, message: '登录成功', type: 'success' });
                     this.$router.push('/home')
                     // window.location.href = '/backend/index.html'
@@ -83,6 +86,9 @@ export default {
                     this.$message({ showClose: true, message: result.data.msg, type: 'error' });
                 }
             })
+        },
+        register() {
+            this.$router.push('/register')
         }
     }
 };
