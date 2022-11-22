@@ -5,6 +5,7 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import CenterAllRequest from '../components/requestCenter/CenterAllRequest.vue'
 import Register from '../components/Register.vue'
+import Details from '../components/details/Details.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,10 @@ const routes = [
     {
       path: '/centerAllRequest',
       component: CenterAllRequest,
+    },
+    {
+      path: '/details',
+      component: Details,
     }]
   }
 ]

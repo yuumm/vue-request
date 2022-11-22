@@ -1,25 +1,24 @@
 <template>
     <div class="container">
-
         <el-container>
-            <el-header>用户注册</el-header>
-            <div class="register_box">
+            <el-header></el-header>
+            <div class="details_box">
                 <el-main>
-                    <el-form ref="registerFormRes" :model="registerForm" label-width="80px" :rules="rules">
+                    <el-form ref="detailsFormRes" :model="detailsForm" label-width="80px" :rules="rules">
                         <el-form-item label="姓名" prop="name">
-                            <el-input v-model="registerForm.name" placeholder="请输入姓名"></el-input>
+                            <el-input v-model="detailsForm.name" placeholder="请输入姓名"></el-input>
                         </el-form-item>
                         <el-form-item label="工号" prop="username">
-                            <el-input v-model="registerForm.username"></el-input>
+                            <el-input v-model="detailsForm.username"></el-input>
                         </el-form-item>
                         <el-form-item label="密码" prop="password">
-                            <el-input v-model="registerForm.password" type="password"></el-input>
+                            <el-input v-model="detailsForm.password" type="password"></el-input>
                         </el-form-item>
                         <el-form-item label="座机">
-                            <el-input v-model="registerForm.phone"></el-input>
+                            <el-input v-model="detailsForm.phone"></el-input>
                         </el-form-item>
                         <el-form-item label="性别:" prop="sex">
-                            <el-radio-group v-model="registerForm.sex">
+                            <el-radio-group v-model="detailsForm.sex">
                                 <el-radio label="男"></el-radio>
                                 <el-radio label="女"></el-radio>
                             </el-radio-group>
@@ -40,7 +39,7 @@
 export default {
     data() {
         return {
-            registerForm: {
+            detailsForm: {
                 name: '',
                 username: '',
                 password: '',
@@ -99,7 +98,6 @@ export default {
 }
 
 .el-header {
-    background-color: #373d41;
     //下两行表示将内容分布在容器两端
     // 以fles方式显示，
     display: flex;
@@ -107,10 +105,6 @@ export default {
     justify-content: space-between;
     // 表示将内部组件上下居中
     align-items: center;
-    // 设置文本内容为白色
-    color: #fff;
-    // 设置文字大小
-    font-size: 20px;
 
     // 下面是对文字的格式设置
     >div {
