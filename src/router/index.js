@@ -7,6 +7,7 @@ import CenterAllRequest from '../components/requestCenter/CenterAllRequest.vue'
 import Register from '../components/Register.vue'
 import Details from '../components/details/Details.vue'
 import Edit from '../components/details/Edit.vue'
+import Create from '../components/details/Create.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,10 @@ const routes = [
       path: '/edit',
       component: Edit,
     },
+    {
+      path: '/create',
+      component: Create,
+    }
     ]
   }
 ]

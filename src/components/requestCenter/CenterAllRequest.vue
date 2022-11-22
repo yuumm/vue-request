@@ -54,7 +54,7 @@
                         <!-- 删除按钮 -->
                         <el-tooltip effect="dark" content="删除" placement="top-start" :enterable="false">
                             <el-button type="danger" icon="el-icon-delete" size="mini"
-                                @click="showEditDialog(scope.row.id)"></el-button>
+                                @click="deleteRequest(scope.row.id)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -68,13 +68,13 @@
         </el-card>
 
         <!-- 查看和编辑的对话框 -->
-        <el-dialog title="查看或修改信息" :visible.sync="editDialogVisible" width="50%">
+        <!-- <el-dialog title="查看或修改信息" :visible.sync="editDialogVisible" width="50%">
             <span>这是一段信息</span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
             </span>
-        </el-dialog>
+        </el-dialog> -->
     </div>
 </template>
 
@@ -132,6 +132,19 @@ export default {
             localStorage.setItem('requestId', id)
             this.$router.push('/edit')
         },
+        // deleteRequest(requestId) {
+        //     console.log(requestId)
+        //     this.deleteRequestById(requestId).then(res => {
+        //         if (res.data.code === 1) {
+        //             this.$message.success('删除成功！')
+        //             this.$router.push('/centerAllRequest')
+        //         } else {
+        //             this.$message.error(res.msg || '操作失败')
+        //         }
+        //     }).catch(err => {
+        //         this.$message.error('请求出错了：' + err)
+        //     })
+        // },
         // 监听pagesize更改的事件
         handleSizeChange(newSize) {
             // console.log(newSize)
@@ -144,11 +157,27 @@ export default {
             this.page = newPage
             this.getRequestList()
         },
+
         // 展示编辑信息的对话框
-        showEditDialog(id) {
-            console.log(id)
-            this.editDialogVisible = true
-        },
+        // showEditDialog(id) {
+        //     console.log(id)
+        //     // this.editDialogVisible = true
+        //     this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+        //         confirmButtonText: '确定',
+        //         cancelButtonText: '取消',
+        //         type: 'warning'
+        //     }).then(() => {
+        //         this.$message({
+        //             type: 'success',
+        //             message: '删除成功!'
+        //         });
+        //     }).catch(() => {
+        //         this.$message({
+        //             type: 'info',
+        //             message: '已取消删除'
+        //         });
+        //     });
+        // },
 
         // 以下时api方法
         getRequestListParams(params) {
@@ -156,6 +185,13 @@ export default {
                 url: 'http://localhost:9999/request/page',
                 method: 'get',
                 params
+            })
+        },
+        deleteRequestById(requestId) {
+            return this.$axios({
+                url: `http://localhost:9999/request/${requestId}`,
+                method: 'put',
+
             })
         }
     }
