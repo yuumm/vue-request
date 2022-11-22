@@ -18,7 +18,7 @@
                     </el-input>
                 </el-col>
                 <el-col :span="4">
-                    <el-button type="primary">新建需求</el-button>
+                    <el-button type="primary" @click="createNewRequest">新建需求</el-button>
                 </el-col>
             </el-row>
 
@@ -121,6 +121,9 @@ export default {
                 this.$message.error('请求出错了：' + err)
             })
             // console.log(res)
+        },
+        createNewRequest() {
+            this.$router.push('/create')
         },
         showRequestDetail(id) {
             console.log("id" + id)
