@@ -41,12 +41,14 @@
                     <template slot-scope="scope">
                         <!-- 查看按钮 -->
                         <el-tooltip effect="dark" content="查看" placement="top-start" :enterable="false">
-                            <el-button type="primary" icon="el-icon-more" size="mini">
+                            <el-button type="primary" icon="el-icon-more" size="mini"
+                                @click="showRequestDetail(scope.row.id)">
                             </el-button>
                         </el-tooltip>
                         <!-- 修改按钮 -->
                         <el-tooltip effect="dark" content="修改" placement="top-start" :enterable="false">
-                            <el-button type="primary" icon="el-icon-edit" size="mini">
+                            <el-button type="primary" icon="el-icon-edit" size="mini"
+                                @click="editRequestDetail(scope.row.id)">
                             </el-button>
                         </el-tooltip>
                         <!-- 删除按钮 -->
@@ -120,15 +122,25 @@ export default {
             })
             // console.log(res)
         },
+        showRequestDetail(id) {
+            console.log("id" + id)
+            localStorage.setItem('requestId', id)
+            this.$router.push('/details')
+        },
+        editRequestDetail(id) {
+            console.log("id" + id)
+            localStorage.setItem('requestId', id)
+            this.$router.push('/edit')
+        },
         // 监听pagesize更改的事件
         handleSizeChange(newSize) {
-            console.log(newSize)
+            // console.log(newSize)
             this.pageSize = newSize
             this.getRequestList()
         },
         // 监听当前的页码值
         handleCurrentChange(newPage) {
-            console.log(newPage)
+            // console.log(newPage)
             this.page = newPage
             this.getRequestList()
         },

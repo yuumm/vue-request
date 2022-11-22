@@ -6,6 +6,7 @@ import Welcome from '../components/Welcome.vue'
 import CenterAllRequest from '../components/requestCenter/CenterAllRequest.vue'
 import Register from '../components/Register.vue'
 import Details from '../components/details/Details.vue'
+import Edit from '../components/details/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -44,7 +45,12 @@ const routes = [
     {
       path: '/details',
       component: Details,
-    }]
+    },
+    {
+      path: '/edit',
+      component: Edit,
+    },
+    ]
   }
 ]
 
@@ -61,7 +67,8 @@ router.beforeEach((to, from, next) => {
   // next是一个函数表示放行，其中next()表示放行，next("")表示强制跳转到引号内的路径
   if (to.path == "/login") return next();
   // 获取localstorage判断是否登录
-  const storage = localStorage.getItem("userInfo");
+  // const storage = localStorage.getItem("userInfo");
+  const storage = window.sessionStorage.getItem("user");
   if (storage == null) return next("/login");
   next();
 })
