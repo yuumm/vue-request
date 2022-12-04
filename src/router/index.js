@@ -73,7 +73,7 @@ router.beforeEach((to, from, next) => {
   if (to.path == "/login") return next();
   // 获取localstorage判断是否登录
   // const storage = localStorage.getItem("userInfo");
-  const storage = window.sessionStorage.getItem("user");
+  const storage = window.sessionStorage.getItem("token");
   if (storage == null) return next("/login");
   next();
 })

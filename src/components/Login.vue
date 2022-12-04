@@ -34,13 +34,14 @@
 
 <!-- <script src="../api/login.js"></script> -->
 <script>
-// import { loginApi } from '../api/login.js'
+import reqestUtil from '../util/request'
+import store from '../store/'
 export default {
     data() {
         return {
             loginForm: {
-                username: '',
-                password: ''
+                username: 'admin',
+                password: '123456'
             },
 
             //表单验证规则
@@ -69,19 +70,19 @@ export default {
             this.$refs.loginFormRes.validate(async valide => {
                 if (!valide) return;
                 // const result = await loginApi(this.loginForm);
-                let result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
+                // let result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
+                let result = await reqestUtil.post('http://localhost:9999/user/login', this.loginForm)
                 console.log(result);
                 if (String(result.data.code) == '1') {
                     console.log(result.code);
                     console.log(result.data.code);
                     console.log(this.loginForm);
-                    // localStorage表示将数据保存在浏览器本地，
-                    // JSON.stringify(res.data)表示将数据转换为json格式
-                    window.sessionStorage.setItem('user', JSON.stringify(result.data.data.id))
-                    // localStorage.setItem('userInfo', JSON.stringify(result.data))
+                    // JSON.stringify(res.data)表示将数据转换为json格式（下方法已经被取代了）
+                    // window.sessionStorage.setItem('token', JSON.stringify(result.data.map.token))
+                    // 将token存入store中，然后commit会调用store中mutation里面的SET_TOKEN方法，该方法就会将token写入sessionstorage
+                    store.commit('SET_TOKEN', result.data.map.token)
                     this.$message({ showClose: true, message: '登录成功', type: 'success' });
                     this.$router.push('/home')
-                    // window.location.href = '/backend/index.html'
                 } else {
                     this.$message({ showClose: true, message: result.data.msg, type: 'error' });
                 }

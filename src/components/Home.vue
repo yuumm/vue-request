@@ -88,7 +88,7 @@ export default {
         },
         logout() {
             // 清空localstorage
-            localStorage.removeItem("userInfo");
+            sessionStorage.removeItem("token");
             this.$router.push("/login");
         },
         // 点击按钮，切换菜单的折叠与展开

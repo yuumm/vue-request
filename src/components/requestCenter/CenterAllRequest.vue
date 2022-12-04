@@ -81,6 +81,8 @@
 <script>
 
 
+import reqestUtil from "@/util/request";
+
 export default {
     data() {
         return {
@@ -108,7 +110,8 @@ export default {
                 query: this.query
             }
             // const { data: res } = await this.$axios.get('http://localhost:9999/request/get', params)
-            await this.getRequestListParams(params).then(res => {
+            // await this.getRequestListParams(params).then(res => {
+            await reqestUtil.get('http://localhost:9999/request/page', params).then(res => {
                 // console.log(res)
                 if (String(res.data.code) === '1') {
                     // console.log(res)
@@ -116,6 +119,8 @@ export default {
                     // console.log(this.tableData)
                     this.total = res.data.data.total
                     // console.log(this.total)
+                } else {
+                  console.log(res)
                 }
             }).catch(err => {
                 this.$message.error('请求出错了：' + err)
