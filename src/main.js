@@ -7,6 +7,7 @@ import store from './store'
 import axios from 'axios'
 // 导入全局样式
 import './assets/css/global.css'
+import  qs from 'qs'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -20,6 +21,7 @@ axios.interceptors.request.use(config => {
   return config;
 })
 Vue.prototype.$axios = axios
+Vue.prototype.$qs = qs
 
 
 new Vue({

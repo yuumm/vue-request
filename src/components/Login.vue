@@ -36,9 +36,11 @@
 <script>
 import reqestUtil from '../util/request'
 import store from '../store/'
+
 export default {
     data() {
-        return {
+      return {
+          // 原版
             loginForm: {
                 username: 'admin',
                 password: '123456'
@@ -70,8 +72,13 @@ export default {
             this.$refs.loginFormRes.validate(async valide => {
                 if (!valide) return;
                 // const result = await loginApi(this.loginForm);
+                // 原版
                 // let result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
-                let result = await reqestUtil.post('http://localhost:9999/user/login', this.loginForm)
+                // 现版
+                // let result = await reqestUtil.post('http://localhost:9999/user/login', this.loginForm)
+              // qs测试版
+              let result = await reqestUtil.post('http://localhost:9999/login?'+this.$qs.stringify(this.loginForm))
+              // let result = await reqestUtil.post('http://localhost:9999/login?'+'username='+this.loginForm.username+'&password='+this.loginForm.password)
                 console.log(result);
                 if (String(result.data.code) == '1') {
                     console.log(result.code);
