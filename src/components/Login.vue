@@ -23,6 +23,7 @@
                 </el-form-item>
                 <!-- 按钮 -->
                 <el-form-item class="btns">
+                    <el-checkbox v-model="loginForm.rememberMe" style="margin: 0px 25px 0px 0px;">记住我</el-checkbox>
                     <el-button type="primary" @click="login">登录</el-button>
                     <el-button type="primary" @click="register">注册</el-button>
                     <el-button type="info" @click="resetLoginForm">重置</el-button>
@@ -36,14 +37,17 @@
 <script>
 import reqestUtil from '../util/request'
 import store from '../store/'
+import Cookies from "js-cookie"
+import { encrypt, decrypt } from "@/util/jsencrypt";
 
 export default {
     data() {
       return {
           // 原版
             loginForm: {
-                username: 'admin',
-                password: '123456'
+                username: '',
+                password: '',
+                rememberMe: false
             },
 
             //表单验证规则
@@ -71,23 +75,34 @@ export default {
         login() {
             this.$refs.loginFormRes.validate(async valide => {
                 if (!valide) return;
+                if (this.loginForm.rememberMe) {
+                  // expires表示存储30天
+                  Cookies.set("username", this.loginForm.username, { expires: 30 });
+                  Cookies.set("password", encrypt(this.loginForm.password), { expires: 30 });
+                  Cookies.set("rememberMe", this.loginForm.rememberMe, { expires: 30 });
+                } else {
+                  // 否则移除
+                  Cookies.remove("username");
+                  Cookies.remove("password");
+                  Cookies.remove("rememberMe");
+                }
                 // const result = await loginApi(this.loginForm);
                 // 原版
                 // let result = await this.$axios.post('http://localhost:9999/user/login', this.loginForm);
                 // 现版
                 // let result = await reqestUtil.post('http://localhost:9999/user/login', this.loginForm)
-              // qs测试版
-              let result = await reqestUtil.post('http://localhost:9999/login?'+this.$qs.stringify(this.loginForm))
-              // let result = await reqestUtil.post('http://localhost:9999/login?'+'username='+this.loginForm.username+'&password='+this.loginForm.password)
-                console.log(result);
+                // qs测试版
+                let result = await reqestUtil.post('http://localhost:9999/login?'+this.$qs.stringify(this.loginForm))
+                // let result = await reqestUtil.post('http://localhost:9999/login?'+'username='+this.loginForm.username+'&password='+this.loginForm.password)
+                //   console.log(result);
                 if (String(result.data.code) == '1') {
-                    console.log(result.code);
+                    // console.log(result.code);
                     console.log(result.data.code);
-                    console.log(this.loginForm);
+                    // console.log(this.loginForm);
                     // JSON.stringify(res.data)表示将数据转换为json格式（下方法已经被取代了）
                     // window.sessionStorage.setItem('token', JSON.stringify(result.data.map.token))
                     // 将token存入store中，然后commit会调用store中mutation里面的SET_TOKEN方法，该方法就会将token写入sessionstorage
-                    store.commit('SET_TOKEN', result.data.map.token)
+                    store.commit('SET_TOKEN', result.data.map.authorization);
                     this.$message({ showClose: true, message: '登录成功', type: 'success' });
                     this.$router.push('/home')
                 } else {
@@ -95,8 +110,21 @@ export default {
                 }
             })
         },
+
         register() {
             this.$router.push('/register')
+        },
+
+      // 每次先去cookie中查询是否有保存的账号密码
+      getCookie() {
+          const username = Cookies.get("username");
+          const password = Cookies.get("password");
+          const rememberMe = Cookies.get("rememberMe");
+          this.loginForm.value = {
+            username: username === undefined ? this.loginForm.username : username,
+            password: password === undefined ? this.loginForm.password : decrypt(password),
+            rememberMe: rememberMe === undefined ? false : Boolean(rememberMe)
+          };
         }
     }
 };
