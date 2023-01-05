@@ -18,9 +18,10 @@ httpService.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     //config.headers.token=window.sessionStorage.getItem('token');
     // 获取token
-    console.log("store="+store.getters.GET_TOKEN)
+    console.log("store="+store.getters.GET_TOKEN);
     // 在header中添加token参数
-    config.headers.token=store.getters.GET_TOKEN
+    config.headers.token=store.getters.GET_TOKEN;
+    console.log("header_token: " + store.getters.GET_TOKEN);
     return config;
 }, function (error) {
     // 对请求错误做些什么

@@ -36,7 +36,7 @@
 <!-- <script src="../api/login.js"></script> -->
 <script>
 import reqestUtil from '../util/request'
-import store from '../store/'
+import store from '../store'
 import Cookies from "js-cookie"
 import { encrypt, decrypt } from "@/util/jsencrypt";
 
@@ -103,6 +103,8 @@ export default {
                     // window.sessionStorage.setItem('token', JSON.stringify(result.data.map.token))
                     // 将token存入store中，然后commit会调用store中mutation里面的SET_TOKEN方法，该方法就会将token写入sessionstorage
                     store.commit('SET_TOKEN', result.data.map.authorization);
+                    console.log('menuList: ' + result.data.map.menuList);
+                    store.commit('SET_MENULIST', result.data.map.menuList);
                     this.$message({ showClose: true, message: '登录成功', type: 'success' });
                     this.$router.push('/home')
                 } else {

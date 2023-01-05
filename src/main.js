@@ -7,6 +7,7 @@ import store from './store'
 import axios from 'axios'
 // 导入全局样式
 import './assets/css/global.css'
+import '@/router/permission'
 import  qs from 'qs'
 
 Vue.config.productionTip = false

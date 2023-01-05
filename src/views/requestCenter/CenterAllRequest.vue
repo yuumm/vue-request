@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- 面包屑导航区域 -->
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>需求中心</el-breadcrumb-item>
-            <el-breadcrumb-item>所有需求</el-breadcrumb-item>
-        </el-breadcrumb>
+<!--        <el-breadcrumb separator-class="el-icon-arrow-right">-->
+<!--            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>-->
+<!--            <el-breadcrumb-item>需求中心</el-breadcrumb-item>-->
+<!--            <el-breadcrumb-item>所有需求</el-breadcrumb-item>-->
+<!--        </el-breadcrumb>-->
 
         <!-- 卡片视图区域 -->
         <el-card class="box-card">
@@ -127,14 +127,17 @@ export default {
             })
             // console.log(res)
         },
+        // 创建新需求按钮
         createNewRequest() {
             this.$router.push('/create')
         },
+        // 显示需求详细信息按钮
         showRequestDetail(id) {
             console.log("id" + id)
             localStorage.setItem('requestId', id)
             this.$router.push('/details')
         },
+        // 编辑需求按钮
         editRequestDetail(id) {
             console.log("id" + id)
             localStorage.setItem('requestId', id)

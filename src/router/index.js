@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/Home.vue'
-import Welcome from '../components/Welcome.vue'
-import CenterAllRequest from '../components/requestCenter/CenterAllRequest.vue'
-import Register from '../components/Register.vue'
-import Details from '../components/details/Details.vue'
-import Edit from '../components/details/Edit.vue'
-import Create from '../components/details/Create.vue'
+import Login from '../views/Login.vue'
+import Home from '../views/Home.vue'
+import Welcome from '../views/Welcome.vue'
+import CenterAllRequest from '../views/requestCenter/CenterAllRequest.vue'
+import Register from '../views/Register.vue'
+import Details from '../views/details/Details.vue'
+import Edit from '../views/details/Edit.vue'
+import Create from '../views/details/Create.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +15,7 @@ const routes = [
   // 重定向，当访问/的时候，自动跳转到登录页面
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/home',
   },
   {
     // path代表用户访问的路径
@@ -65,17 +65,17 @@ const router = new VueRouter({
   routes
 })
 
-// 挂载路由守卫，用于判断用户是否登录
-router.beforeEach((to, from, next) => {
-  // to表示将要访问的路径
-  // from表示从哪个路径跳转而来
-  // next是一个函数表示放行，其中next()表示放行，next("")表示强制跳转到引号内的路径
-  if (to.path == "/login") return next();
-  // 获取localstorage判断是否登录
-  // const storage = localStorage.getItem("userInfo");
-  const storage = window.sessionStorage.getItem("token");
-  if (storage == null) return next("/login");
-  next();
-})
+// 挂载路由守卫，用于判断用户是否登录(下面的代码被同目录下的permission.js平替了，为了方便后面动态路由的实现)
+// router.beforeEach((to, from, next) => {
+//   // to表示将要访问的路径
+//   // from表示从哪个路径跳转而来
+//   // next是一个函数表示放行，其中next()表示放行，next("")表示强制跳转到引号内的路径
+//   if (to.path == "/login") return next();
+//   // 获取localstorage判断是否登录
+//   // const storage = localStorage.getItem("userInfo");
+//   const storage = window.sessionStorage.getItem("token");
+//   if (storage == null) return next("/login");
+//   next();
+// })
 
 export default router
