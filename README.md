@@ -1,6 +1,10 @@
 # request-web
 
 ## Project setup
+
+### 将路由守卫写进permission.js，同时将左侧菜单栏写进menu文件夹，然后将menu写成动态生成的。
+### 目前还存在不清理cookie返回的菜单栏还是上一个用户的问题
+
 ```
 yarn install
 ```
