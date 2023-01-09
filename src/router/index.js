@@ -14,8 +14,21 @@ Vue.use(VueRouter)
 const routes = [
   // 重定向，当访问/的时候，自动跳转到登录页面
   {
-    path: '/',
-    redirect: '/home',
+    path: '/home',
+    name: '首页',
+    component: Home,
+    children: [
+      {
+        path: '/index',
+        name: '首页',
+        component: () => import('../views/index/index'),
+      },
+      {
+        path: '/userCenter',
+        name: '个人中心',
+        component: () => import('../views/userCenter/index')
+      },
+    ]
   },
   {
     // path代表用户访问的路径
@@ -27,36 +40,37 @@ const routes = [
     path: '/register',
     component: Register
   },
-  {
-    path: '/home',
-    component: Home,
-    // redirect表示当访问home的时候，就重定向到welcome中
-    redirect: '/welcome',
-    // children 表示在home路由下的页面中间要显示Welcome路由中的内容
-    // 例如在侧边栏的旁边显示不同的内容，就可以将要显示的内容写到子路径中，
-    //  然后将<router-view>放在对应页面的对应位置便可以进行展示
-    children: [{
-      path: '/welcome',
-      component: Welcome,
-    },
-    {
-      path: '/centerAllRequest',
-      component: CenterAllRequest,
-    },
-    {
-      path: '/details',
-      component: Details,
-    },
-    {
-      path: '/edit',
-      component: Edit,
-    },
-    {
-      path: '/create',
-      component: Create,
-    }
-    ]
-  }
+
+  // {
+  //   path: '/home',
+  //   component: Home,
+  //   // redirect表示当访问home的时候，就重定向到welcome中
+  //   redirect: '/welcome',
+    // children 表示如在home路由下的页面中间要显示Welcome路由中的内容
+    //  那么就将welcome路由写到home的子路由中，然后在home页面中写入<router-view>，
+    //  这样，当我们访问welcome路由的时候，就会在home页面中的<router-view>部分展示welcome的页面
+  //   children: [{
+  //     path: '/welcome',
+  //     component: Welcome,
+  //   },
+  //   {
+  //     path: '/centerAllRequest',
+  //     component: CenterAllRequest,
+  //   },
+  //   {
+  //     path: '/details',
+  //     component: Details,
+  //   },
+  //   {
+  //     path: '/edit',
+  //     component: Edit,
+  //   },
+  //   {
+  //     path: '/create',
+  //     component: Create,
+  //   }
+  //   ]
+  // }
 ]
 
 const router = new VueRouter({
